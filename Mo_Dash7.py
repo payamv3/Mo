@@ -1,19 +1,25 @@
 import streamlit as st
-import csv
-import os
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 from sellcell_data import get_all_devices, get_sellcell_price
 
 # -------------------------------
-# Helper: Save Prolific ID to CSV
+# CONFIG
 # -------------------------------
-def save_prolific_id(prolific_id: str, device: str, decision: str, working: str):
-    file_exists = os.path.isfile("prolific_ids.csv")
-    with open("prolific_ids.csv", "a", newline="") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(["ProlificID", "Device", "Decision", "Working"])
-        writer.writerow([prolific_id, device, decision, working])
-    print(f"✅ Saved row -> {prolific_id}, {device}, {decision}, {working}")
+JSON_KEY_FILE = "mo-the-chatbot-77d49f77ea5c.json"  # Path to your downloaded JSON key
+SHEET_NAME = "ProlificIDs"             # Name of your Google Sheet
+
+# -------------------------------
+# Helper: Save data to Google Sheet
+# -------------------------------
+def save_to_google_sheet(prolific_id, device, decision, working):
+    scope = ["https://spreadsheets.google.com/feeds",
+             "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(JSON_KEY_FILE, scope)
+    client = gspread.authorize(creds)
+    sheet = client.open(SHEET_NAME).sheet1
+    sheet.append_row([prolific_id, device, decision, working])
+    st.success("✅ Data saved to Google Sheet!")
 
 # -------------------------------
 # Session state setup
@@ -177,7 +183,7 @@ elif st.session_state.step == 4 and st.session_state.prolific_id is None:
     prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:", key="prolific_id_input")
 
     if prolific_id_input:
-        save_prolific_id(
+        save_to_google_sheet(
             prolific_id_input,
             st.session_state.device,
             st.session_state.decision,
