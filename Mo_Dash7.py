@@ -4,25 +4,24 @@ from oauth2client.service_account import ServiceAccountCredentials
 from sellcell_data import get_all_devices, get_sellcell_price
 
 # -------------------------------
-# CONFIG
+# Google Sheets helper
 # -------------------------------
-JSON_KEY_FILE = "mo-the-chatbot-77d49f77ea5c.json"  # Path to your downloaded JSON key
-SHEET_NAME = "ProlificIDs"             # Name of your Google Sheet
-
-# -------------------------------
-# Helper: Save data to Google Sheet
-# -------------------------------
-def save_to_google_sheet(prolific_id, device, decision, working):
+def get_google_sheet(sheet_name):
     scope = ["https://spreadsheets.google.com/feeds",
              "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(JSON_KEY_FILE, scope)
+    sa_info = st.secrets["google_service_account"]  # Use Streamlit Secrets
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(sa_info, scope)
     client = gspread.authorize(creds)
-    sheet = client.open(SHEET_NAME).sheet1
+    sheet = client.open(sheet_name).sheet1
+    return sheet
+
+def save_to_google_sheet(prolific_id, device, decision, working):
+    sheet = get_google_sheet("ProlificIDs")
     sheet.append_row([prolific_id, device, decision, working])
     st.success("✅ Data saved to Google Sheet!")
 
 # -------------------------------
-# Session state setup
+# Session state
 # -------------------------------
 if "step" not in st.session_state:
     st.session_state.step = 0
@@ -49,7 +48,6 @@ st.title("♻️ Device Sustainability ChatBot")
 if st.session_state.step == 0:
     devices = sorted(get_all_devices())
     device_choice = st.selectbox("📱 What device do you have?", [""] + devices)
-
     if st.button("Confirm Device") and device_choice != "":
         st.session_state.device = device_choice
         st.session_state.step = 1
@@ -61,14 +59,13 @@ if st.session_state.step == 0:
 elif st.session_state.step == 1:
     st.write(f"🔋 Does your **{st.session_state.device}** power on and hold a charge?")
     working_choice = st.radio("Select one:", ["Yes", "No"], index=0)
-
     if st.button("Confirm Status") and working_choice:
         st.session_state.working = working_choice
         st.session_state.step = 2
         st.rerun()
 
 # -------------------------------
-# Step 2: Show resale value immediately if working
+# Step 2: Show resale value if working
 # -------------------------------
 elif st.session_state.step == 2:
     device = st.session_state.device
@@ -91,25 +88,25 @@ elif st.session_state.step == 2:
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
 
-        # Ask what they want to do next
-        decision_choice = st.radio(
-            "What would you like to do with your device?",
-            ["Resell", "Donate", "Recycle"]
-        )
-        if st.button("Confirm Choice") and decision_choice:
-            st.session_state.decision = decision_choice
-            st.session_state.step = 3
-            st.rerun()
-
     else:
-        # Device not working → only recycle
         st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
-        st.session_state.decision = "Recycle"
+
+    # Ask what they want to do next
+    decision_options = ["Donate", "Recycle"]
+    if working == "Yes":
+        decision_options = ["Resell", "Donate", "Recycle"]
+
+    decision_choice = st.radio(
+        "What would you like to do with your device?",
+        decision_options
+    )
+    if st.button("Confirm Choice") and decision_choice:
+        st.session_state.decision = decision_choice
         st.session_state.step = 3
         st.rerun()
 
 # -------------------------------
-# Step 3: Wipe instructions with two buttons
+# Step 3: Wipe instructions with buttons
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
     device = st.session_state.device
@@ -136,7 +133,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         if st.button("⚠️ I was unable to wipe"):
             st.session_state.unable_to_wipe_message = True
 
-    # Show the warning if user clicked "I was unable to wipe"
     if st.session_state.unable_to_wipe_message:
         st.warning(
             "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
@@ -148,7 +144,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.rerun()
 
 # -------------------------------
-# Step 4: Show decision-specific links after wiping
+# Step 4: Show decision-specific links
 # -------------------------------
 elif st.session_state.step == 3 and st.session_state.wipe_done and not st.session_state.links_done:
     device = st.session_state.device
@@ -180,7 +176,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
 # Step 5: Prolific ID
 # -------------------------------
 elif st.session_state.step == 4 and st.session_state.prolific_id is None:
-    prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:", key="prolific_id_input")
+    prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:")
 
     if prolific_id_input:
         save_to_google_sheet(
