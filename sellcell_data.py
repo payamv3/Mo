@@ -61,15 +61,15 @@ def get_sellcell_price(device_model: str, condition: str = None, storage: str = 
             elif condition:
                 try:
                     price = row.iloc[0][(condition, "Top Price")]
-                    depr = row.iloc[0][(condition, "Depr.")]
-                    depr_pct = row.iloc[0][(condition, "%")]
+                    #depr = row.iloc[0][(condition, "Depr.")]
+                    #depr_pct = row.iloc[0][(condition, "%")]
                 except KeyError:
                     return {}
                 return {
                     "price": price,
-                    "depreciation": depr,
-                    "depreciation_pct": depr_pct,
-                    "msrp": msrp,
+                    #"depreciation": depr,
+                    #"depreciation_pct": depr_pct,
+                    #"msrp": msrp,
                     "launch_year": launch_year,
                     "brand": brand
                 }
