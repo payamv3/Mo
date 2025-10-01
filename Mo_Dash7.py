@@ -46,8 +46,9 @@ st.title("♻️ Device Sustainability ChatBot")
 # Step 0: Device selection
 # -------------------------------
 if st.session_state.step == 0:
+    st.markdown('Hello and welcome! I am Mo, your guide for making sustainable choices with smartphones you no longer use at home. We will work together to find the best option, whether that is reselling, donating, or recycling your device. If you experience a timeout, just refresh the page. You will be done when all your questions are answered and you have entered your Prolific ID.')
     devices = sorted(get_all_devices())
-    device_choice = st.selectbox("📱 What device do you have?", [""] + devices)
+    device_choice = st.selectbox("📱To get started, could you tell me about the smartphone you would like advice on?", [""] + devices)
     if st.button("Confirm Device") and device_choice != "":
         st.session_state.device = device_choice
         st.session_state.step = 1
