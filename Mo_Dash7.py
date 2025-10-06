@@ -40,7 +40,7 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
-st.title("♻️ Device Sustainability ChatBot")
+st.title("♻️ Mo - The Sustainability ChatBot")
 
 # -------------------------------
 # Step 0: Device selection
