@@ -49,10 +49,19 @@ if st.session_state.step == 0:
     st.markdown('Hello and welcome! I am Mo, your guide for making sustainable choices with smartphones you no longer use at home. We will work together to find the best option, whether that is reselling, donating, or recycling your device. If you experience a timeout, just refresh the page. You will be done when all your questions are answered and you have entered your Prolific ID.')
     devices = sorted(get_all_devices())
     device_choice = st.selectbox("📱To get started, could you tell me about the smartphone you would like advice on?", [""] + devices)
-    if st.button("Confirm Device") and device_choice != "":
-        st.session_state.device = device_choice
-        st.session_state.step = 1
-        st.rerun()
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Confirm Device") and device_choice != "":
+            st.session_state.device = device_choice
+            st.session_state.step = 1
+            st.rerun()
+    with col2:
+        if st.button("📵 My phone is not in the list"):
+            st.session_state.device = "Unlisted Model"
+            st.session_state.working = "No Info"
+            st.session_state.step = 2
+            st.rerun()
 
 # -------------------------------
 # Step 1: Working / Not working
@@ -72,7 +81,11 @@ elif st.session_state.step == 2:
     device = st.session_state.device
     working = st.session_state.working
 
-    if working == "Yes":
+    if device == "Unlisted Model":
+        st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
+        working = "No"  # Disable resale path for unlisted model
+
+    elif working == "Yes":
         # Show highest resale price
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
@@ -95,13 +108,15 @@ elif st.session_state.step == 2:
     # Show information under each option
     st.markdown("### 💡 Here are your options:")
 
-    st.markdown(
-        f"**Resell:** You could earn some cash by selling your old phone if in working condition, and can hold charge for a day’s use. "
-        f"Try the following websites to get an estimate of your smartphone’s current worth:  \n"
-        f"- [BackMarket](https://www.backmarket.com)  \n"
-        f"- [Gazelle](https://www.gazelle.com)  \n"
-        f"It’s easy to resell, either vendor will send you a box with prepaid postage."
-    )
+    # Show Resell info only if applicable
+    if working == "Yes" and device != "Unlisted Model":
+        st.markdown(
+            f"**Resell:** You could earn some cash by selling your old phone if in working condition, and can hold charge for a day’s use. "
+            f"Try the following websites to get an estimate of your smartphone’s current worth:  \n"
+            f"- [BackMarket](https://www.backmarket.com)  \n"
+            f"- [Gazelle](https://www.gazelle.com)  \n"
+            f"It’s easy to resell, either vendor will send you a box with prepaid postage."
+        )
 
     st.markdown(
         f"**Donate:** You used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
@@ -115,10 +130,11 @@ elif st.session_state.step == 2:
         f"- [Best Buy – Free electronics recycling at all stores, usually there is a bin near Customer Service](https://www.google.com/maps/search/BestBuy+near+me)"
     )
 
-    # Ask what they want to do next
-    decision_options = ["Donate", "Recycle"]
-    if working == "Yes":
+    # Decision options depend on device condition
+    if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
+    else:
+        decision_options = ["Donate", "Recycle"]
 
     decision_choice = st.radio(
         "Please select what you would like to do with your device:",
