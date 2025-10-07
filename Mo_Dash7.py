@@ -66,7 +66,7 @@ elif st.session_state.step == 1:
         st.rerun()
 
 # -------------------------------
-# Step 2: Show resale value if working
+# Step 2: Show resale value if working + enriched info under each option
 # -------------------------------
 elif st.session_state.step == 2:
     device = st.session_state.device
@@ -92,15 +92,39 @@ elif st.session_state.step == 2:
     else:
         st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
 
+    # Show information under each option
+    st.markdown("### 💡 Here are your options:")
+
+    st.markdown(
+        f"**Resell:** You could earn some cash by selling your old phone if in working condition, and can hold charge for a day’s use. "
+        f"Try the following websites to get an estimate of your smartphone’s current worth:  \n"
+        f"- [BackMarket](https://www.backmarket.com)  \n"
+        f"- [Gazelle](https://www.gazelle.com)  \n"
+        f"It’s easy to resell, either vendor will send you a box with prepaid postage."
+    )
+
+    st.markdown(
+        f"**Donate:** You used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
+        f"You can try donating your device, for example at:  \n"
+        f"- [Goodwill - Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
+        f"- [Salvation Army - Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
+    )
+
+    st.markdown(
+        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example:  \n"
+        f"- [Best Buy – Free electronics recycling at all stores, usually there is a bin near Customer Service](https://www.google.com/maps/search/BestBuy+near+me)"
+    )
+
     # Ask what they want to do next
     decision_options = ["Donate", "Recycle"]
     if working == "Yes":
         decision_options = ["Resell", "Donate", "Recycle"]
 
     decision_choice = st.radio(
-        "What would you like to do with your device?",
+        "Please select what you would like to do with your device:",
         decision_options
     )
+
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
         st.session_state.step = 3
