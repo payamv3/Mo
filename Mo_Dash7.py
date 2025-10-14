@@ -152,18 +152,32 @@ elif st.session_state.step == 2:
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
     device = st.session_state.device
     decision = st.session_state.decision
-    os_type = "ios" if "iphone" in device.lower() else "android"
 
     st.markdown(f"🔒 Before you {decision.lower()} your device, please wipe it securely:")
-    if os_type == "ios":
+
+    # Show both iOS and Android guides if the phone is unlisted
+    if device == "Unlisted Model":
+        st.markdown("#### For iPhones (iOS):")
         st.markdown(
             "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
             "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
         )
-    else:
+        st.markdown("#### For Android phones:")
         st.markdown(
             "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
+    else:
+        # Normal OS-based behavior
+        os_type = "ios" if "iphone" in device.lower() else "android"
+        if os_type == "ios":
+            st.markdown(
+                "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
+                "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
+            )
+        else:
+            st.markdown(
+                "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+            )
 
     col1, col2 = st.columns(2)
     with col1:
