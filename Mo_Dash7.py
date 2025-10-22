@@ -137,7 +137,7 @@ elif st.session_state.step == 2:
         decision_options = ["Donate", "Recycle"]
 
     decision_choice = st.radio(
-        "Please select what you would like to do with your device:",
+        "What option would you like to explore for your device?",
         decision_options
     )
 
