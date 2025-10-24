@@ -67,8 +67,8 @@ if st.session_state.step == 0:
 # Step 1: Working / Not working
 # -------------------------------
 elif st.session_state.step == 1:
-    st.write(f"🔋 Does your **{st.session_state.device}** power on and hold a charge?")
-    working_choice = st.radio("Select one:", ["Yes", "No"], index=0)
+    st.write(f"🔋 Does your **{st.session_state.device}** power on and the battery lasts for daily use?")
+    working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
     if st.button("Confirm Status") and working_choice:
         st.session_state.working = working_choice
         st.session_state.step = 2
@@ -111,7 +111,7 @@ elif st.session_state.step == 2:
     # Show Resell info only if applicable
     if working == "Yes" and device != "Unlisted Model":
         st.markdown(
-            f"**Resell:** You could earn some cash by selling your old phone if in working condition, and can hold charge for a day’s use. "
+            f"**Resell:** You could earn some cash by selling your old phone if in working condition, and can hold charge for a day’s use. The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price."
             f"Try the following websites to get an estimate of your smartphone’s current worth:  \n"
             f"- [BackMarket](https://www.backmarket.com)  \n"
             f"- [Gazelle](https://www.gazelle.com)  \n"
@@ -210,6 +210,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
     if decision == "Resell":
         st.markdown(
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com), [Gazelle](https://www.gazelle.com)"
+            f"You click on one of the above website, you will choose the model of your smartphone and they will give you an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you."
         )
     elif decision == "Donate":
         st.markdown(
