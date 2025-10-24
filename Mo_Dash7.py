@@ -67,7 +67,7 @@ if st.session_state.step == 0:
 # Step 1: Working / Not working
 # -------------------------------
 elif st.session_state.step == 1:
-    st.write(f"🔋 Does your **{st.session_state.device}** power on and the battery lasts for daily use?")
+    st.write(f"🔋 Does your **{st.session_state.device}** power on and the battery last for daily use?")
     working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
     if st.button("Confirm Status") and working_choice:
         st.session_state.working = working_choice
