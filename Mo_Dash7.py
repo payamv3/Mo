@@ -115,8 +115,9 @@ elif st.session_state.step == 2:
             f"Try the following websites to get an estimate of your smartphone’s current worth:  \n"
             f"- [BackMarket](https://www.backmarket.com)  \n"
             f"- [Gazelle](https://www.gazelle.com)  \n"
-            f"- It’s easy to resell, either vendor will send you a box with prepaid postage."
+           
         )
+        st.markdown( f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
 
     st.markdown(
         f"**Donate:** You used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
