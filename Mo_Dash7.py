@@ -131,20 +131,6 @@ elif st.session_state.step == 2:
         f"usually there is a bin near Customer Service"
     )
 
-    else:
-        st.markdown(
-        f"**Donate:** You used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
-        f"You can try donating your device, for example at:  \n"
-        f"- [Goodwill - Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
-        f"- [Salvation Army - Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
-    )
-
-    st.markdown(
-        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example:  \n"
-        f"- [Best Buy – Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"
-        f"usually there is a bin near Customer Service"
-    )
-
     # Decision options depend on device condition
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
