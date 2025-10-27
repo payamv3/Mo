@@ -212,19 +212,20 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
     if decision == "Resell":
         st.markdown(
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com), [Gazelle](https://www.gazelle.com)"
-            f"- You click on one of the above website, you will choose the model of your smartphone and they will give you an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you."
         )
+        st.markdown( f"You can click on one of the above website, you will be prompted to choose the model of your smartphone and they will give you an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
     elif decision == "Donate":
         st.markdown(
             f"- Donate your **{device}**: "
             f"[Goodwill near me](https://www.google.com/maps/search/Goodwill+near+me), "
-            f"[Salvation Army near me](https://www.google.com/maps/search/Salvation+Army+near+me)"
-            f" - You drop off the smartphone at locations such as these links and they will give you a tax deduction form"
+            f"[Salvation Army near me](https://www.google.com/maps/search/Salvation+Army+near+me)"    
         )
+        st.markdown("You can drop off the smartphone at locations such as the above links. They will likely give you a tax deduction form.")
     elif decision == "Recycle":
         st.markdown(
             f"- Recycle your **{device}**: [BestBuy Recycling](https://www.google.com/maps/search/BestBuy+near+me)"
         )
+        st.markdown("You can usually find the recycle bin next to the customer service counter")
 
     if st.button("✅ Done viewing links"):
         st.session_state.links_done = True
