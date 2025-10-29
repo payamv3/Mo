@@ -212,7 +212,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         st.markdown(
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com), [Gazelle](https://www.gazelle.com)"
         )
-        st.markdown( f"You can click on one of the above website, you will be prompted to choose the model of your smartphone and they will give you an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
+        st.markdown( f"By clicking on one of the above website, you will be prompted to choose the model of your smartphone. You will be recommended an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
     elif decision == "Donate":
         st.markdown(
             f"- Donate your **{device}**: "
