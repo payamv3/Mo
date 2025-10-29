@@ -126,10 +126,10 @@ elif st.session_state.step == 2:
     )
 
     st.markdown(
-        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example:  \n"
+        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
         f"- [Best Buy – Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"    
     )
-    st.markdown(f"usually there is a bin near Customer Service")
+    st.markdown(f"there is usually a bin near Customer Service for dropping in your consumer electronics.")
 
     # Decision options depend on device condition
     if working == "Yes" and device != "Unlisted Model":
