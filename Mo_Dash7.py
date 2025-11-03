@@ -172,13 +172,13 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         # Normal OS-based behavior
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
-            st.markdown(f"For an iOS device, this means disabling Find My on your device and then wiping it")
+            st.markdown(f"For an iOS device, this means disabling Find My on your device and then wiping it:")
             st.markdown(
                 "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
                 "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
             )
         else:
-            st.markdown(f"For an Androud device, this means removing the device from your Google account and then wiping it")
+            st.markdown(f"For an Androud device, this means removing the device from your Google account and then wiping it:")
             st.markdown(
                 "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
             )
