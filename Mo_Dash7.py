@@ -154,16 +154,17 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
     device = st.session_state.device
     decision = st.session_state.decision
 
-    st.markdown(f"🔒 Before you {decision.lower()} your device, please wipe it securely:")
+    st.markdown(f"🔒 Before you {decision.lower()} your device, please wipe it securely")
+    
 
     # Show both iOS and Android guides if the phone is unlisted
     if device == "Unlisted Model":
-        st.markdown("#### For iPhones (iOS):")
+        st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
         st.markdown(
             "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
             "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
         )
-        st.markdown("#### For Android phones:")
+        st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
             "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
@@ -171,11 +172,13 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         # Normal OS-based behavior
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
+            st.markdown(f"For an iOS device, this means disabling Find My on your device and then wiping it")
             st.markdown(
                 "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
                 "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
             )
         else:
+            st.markdown(f"For an Androud device, this means removing the device from your Google account and then wiping it")
             st.markdown(
                 "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
             )
@@ -212,7 +215,9 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         st.markdown(
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com), [Gazelle](https://www.gazelle.com)"
         )
-        st.markdown( f"By clicking on one of the above website, you will be prompted to choose the model of your smartphone. You will be recommended an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them. Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
+        st.markdown(f"By clicking on one of the above website:")
+        st.markdown(f"you will be prompted to choose the model of your smartphone. You will be provided with an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them.")
+        st.markdown(f"Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
     elif decision == "Donate":
         st.markdown(
             f"- Donate your **{device}**: "
