@@ -206,7 +206,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             
         )
     else:
-            st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+        st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
             "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
