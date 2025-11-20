@@ -165,20 +165,33 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
     device = st.session_state.device
     decision = st.session_state.decision
 
-    st.markdown(f"🔒 Before you {decision.lower()} your device, please wipe it securely")
+    st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
+    st.markdown(f"To remove data, see this guide:")
     
 
     # Show both iOS and Android guides if the phone is unlisted
     if device == "Unlisted Model":
         st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
         st.markdown(
+            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(
             "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
-            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)"
+            
         )
         st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
-            "- Wipe instructions: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+            "- Factory Reset: [Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(
+            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
+            
+        )
+        
+        
     else:
         # Normal OS-based behavior
         os_type = "ios" if "iphone" in device.lower() else "android"
