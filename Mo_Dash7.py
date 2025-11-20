@@ -3,6 +3,17 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from sellcell_data import get_all_devices, get_sellcell_price
 
+st.markdown(
+    """
+    <style>
+    html, body, [class*="css"]  {
+        font-size: 20px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # -------------------------------
 # Google Sheets helper
 # -------------------------------
@@ -67,7 +78,7 @@ if st.session_state.step == 0:
 # Step 1: Working / Not working
 # -------------------------------
 elif st.session_state.step == 1:
-    st.write(f"🔋 Does your **{st.session_state.device}** power on and the battery last for daily use?")
+    st.write(f"🔋 Does your **{st.session_state.device}** power on and does the battery last for daily use?")
     working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
     if st.button("Confirm Status") and working_choice:
         st.session_state.working = working_choice
