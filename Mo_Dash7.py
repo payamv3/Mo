@@ -7,7 +7,7 @@ st.markdown(
     """
     <style>
     html, body, [class*="css"]  {
-        font-size: 24px !important;
+        font-size: 20px !important;
     }
     </style>
     """,
