@@ -184,8 +184,8 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(
             "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
-        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
             
@@ -207,8 +207,8 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
             st.markdown(
             "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
-            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
 
