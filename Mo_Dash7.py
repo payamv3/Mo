@@ -51,6 +51,37 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
+# ⭐ ADDED: persistent back flag
+if "back_request" not in st.session_state:
+    st.session_state.back_request = False
+
+# ⭐ ADDED: GLOBAL BACK HANDLER (runs before rendering steps)
+if st.session_state.back_request:
+    st.session_state.back_request = False  # reset flag
+
+    if st.session_state.step == 1:
+        st.session_state.step = 0
+        st.session_state.device = None
+
+    elif st.session_state.step == 2:
+        st.session_state.step = 1
+        st.session_state.working = None
+
+    elif st.session_state.step == 3 and not st.session_state.wipe_done:
+        st.session_state.step = 2
+        st.session_state.decision = None
+        st.session_state.unable_to_wipe_message = False
+
+    elif st.session_state.step == 3 and st.session_state.wipe_done and not st.session_state.links_done:
+        st.session_state.links_done = False
+        st.session_state.step = 3
+
+    elif st.session_state.step == 4 and st.session_state.prolific_id is None:
+        st.session_state.links_done = False
+        st.session_state.step = 3
+
+    st.rerun()
+
 st.title("♻️ Mo - The Sustainable Electronics Assistant")
 
 # -------------------------------
@@ -78,6 +109,10 @@ if st.session_state.step == 0:
 # Step 1: Working / Not working
 # -------------------------------
 elif st.session_state.step == 1:
+    if st.button("⬅️ Back"):
+        st.session_state.back_request = True
+        st.rerun()
+
     st.write(f"🔋 Does your **{st.session_state.device}** power on and does the battery last for daily use?")
     working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
     if st.button("Confirm Status") and working_choice:
@@ -86,18 +121,21 @@ elif st.session_state.step == 1:
         st.rerun()
 
 # -------------------------------
-# Step 2: Show resale value if working + enriched info under each option
+# Step 2
 # -------------------------------
 elif st.session_state.step == 2:
+    if st.button("⬅️ Back"):
+        st.session_state.back_request = True
+        st.rerun()
+
     device = st.session_state.device
     working = st.session_state.working
 
     if device == "Unlisted Model":
         st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
-        working = "No"  # Disable resale path for unlisted model
+        working = "No"
 
     elif working == "Yes":
-        # Show highest resale price
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
         for cond in conditions:
@@ -112,22 +150,19 @@ elif st.session_state.step == 2:
             st.success(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
-
     else:
         st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
 
-    # Show information under each option
     st.markdown("### 💡 Here are your options:")
 
-    # Show Resell info only if applicable
     if working == "Yes" and device != "Unlisted Model":
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown(
             f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth  \n"
             f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) (click "Trade-in" on upper right side of page) \n'
-            f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) (click "Sell to us" on upper right side of page)  \n'
-    )
-        st.markdown( f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
+            f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0)"
+        )
+        st.markdown(f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
 
     st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
@@ -142,7 +177,6 @@ elif st.session_state.step == 2:
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
-    # Decision options depend on device condition
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
     else:
@@ -159,17 +193,19 @@ elif st.session_state.step == 2:
         st.rerun()
 
 # -------------------------------
-# Step 3: Wipe instructions with buttons
+# Step 3: Wipe instructions
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
+    if st.button("⬅️ Back"):
+        st.session_state.back_request = True
+        st.rerun()
+
     device = st.session_state.device
     decision = st.session_state.decision
 
     st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
     st.markdown(f"To remove data, see this guide:")
-    
 
-    # Show both iOS and Android guides if the phone is unlisted
     if device == "Unlisted Model":
         st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
         st.markdown(
@@ -178,7 +214,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
             "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
-            
         )
         st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
@@ -188,29 +223,25 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
-            
         )
-        
-        
     else:
-        # Normal OS-based behavior
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
             st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
             st.markdown(
-            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+                "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
             st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
-            "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
+                "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
         else:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
             st.markdown(
-            "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+                "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
             st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
-            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
+                "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -232,9 +263,13 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.rerun()
 
 # -------------------------------
-# Step 4: Show decision-specific links
+# Step 4: Decision-specific links
 # -------------------------------
 elif st.session_state.step == 3 and st.session_state.wipe_done and not st.session_state.links_done:
+    if st.button("⬅️ Back"):
+        st.session_state.back_request = True
+        st.rerun()
+
     device = st.session_state.device
     decision = st.session_state.decision
 
@@ -269,6 +304,10 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
 # Step 5: Prolific ID
 # -------------------------------
 elif st.session_state.step == 4 and st.session_state.prolific_id is None:
+    if st.button("⬅️ Back"):
+        st.session_state.back_request = True
+        st.rerun()
+
     prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:")
 
     if prolific_id_input:
