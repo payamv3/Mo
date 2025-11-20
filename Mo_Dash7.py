@@ -258,7 +258,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         st.markdown(
             f"- Recycle your **{device}**: [BestBuy Recycling](https://www.google.com/maps/search/BestBuy+near+me)"
         )
-        st.markdown("You can usually find the recycle bin next to the customer service counter")
+        st.markdown("You can usually find the recycle bin next to the customer service counter.")
 
     if st.button("✅ Done viewing links"):
         st.session_state.links_done = True
