@@ -124,8 +124,8 @@ elif st.session_state.step == 2:
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown(
             f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth  \n"
-            f"- [BackMarket](https://www.backmarket.com)  \n"
-            f"- [Gazelle](https://www.gazelle.com)  \n"
+            f"- [BackMarket](https://www.backmarket.com) (click "Trade-in" on upper right side of page) \n"
+            f"- [Gazelle](https://www.gazelle.com) (click "Sell to us” on upper right side of page)  \n"
     )
         st.markdown( f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
 
