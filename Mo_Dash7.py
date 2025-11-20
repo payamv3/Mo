@@ -123,7 +123,7 @@ elif st.session_state.step == 2:
     if working == "Yes" and device != "Unlisted Model":
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown(
-            f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth:  \n"
+            f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth  \n"
             f"- [BackMarket](https://www.backmarket.com)  \n"
             f"- [Gazelle](https://www.gazelle.com)  \n"
     )
