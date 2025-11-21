@@ -164,19 +164,17 @@ elif st.session_state.step == 2:
             f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) (click "Sell to us" on upper right side of page)  \n'
     )
         st.markdown( f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
-
-    st.markdown(
+        st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
         f"You can try donating your device, for example at:  \n"
         f"- [Goodwill - Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
         f"- [Salvation Army - Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
     )
-
-    st.markdown(
+        st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
         f"- [Best Buy – Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"    
     )
-    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
+        st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
