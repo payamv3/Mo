@@ -192,7 +192,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
-            "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
+            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
         )
         st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
@@ -214,7 +214,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
-            "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
+            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
         else:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
             st.markdown(
