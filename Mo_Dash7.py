@@ -156,25 +156,27 @@ elif st.session_state.step == 2:
 
     st.markdown("### 💡 Here are your options:")
 
-    if working == "Yes" and device != "Unlisted Model":
-        st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition.")
+   if working == "Yes" and device != "Unlisted Model":
+        st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown(
-            f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and adjust the price if needed.  \n"
-            f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) \n'
-            f'- [Gazelle](https://www.gazelle.com/trade-in)'
-        )
-        st.markdown("They will send you a prepaid box to ship your smartphone.")
+            f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth  \n"
+            f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) (click "Trade-in" on upper right side of page) \n'
+            f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) (click "Sell to us" on upper right side of page)  \n'
+    )
+        st.markdown( f"It’s easy to resell, either vendor will send you a box with prepaid postage.")
 
     st.markdown(
-        f"**Donate:** Your used phone may not fetch a high price, but donating gives it a new life.  \n"
-        f"- [Goodwill - Accepts working electronics](https://www.google.com/maps/search/Goodwill+near+me)  \n"
+        f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
+        f"You can try donating your device, for example at:  \n"
+        f"- [Goodwill - Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
         f"- [Salvation Army - Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
     )
 
     st.markdown(
-        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling.  \n"
-        f"- [Best Buy – Free electronics recycling](https://www.google.com/maps/search/BestBuy+near+me)"
+        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
+        f"- [Best Buy – Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"    
     )
+    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
@@ -204,10 +206,29 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
     st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
     st.markdown(f"To remove data, see this guide:")
+    
 
+    # Show both iOS and Android guides if the phone is unlisted
     if device == "Unlisted Model":
-        st.markdown("- iOS: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
-        st.markdown("- Android: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+        st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+        st.markdown(
+            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(
+            "- Disable Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
+            
+        )
+        st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+        st.markdown(
+            "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+        )
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(
+            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
+            
+        )
     else:
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
