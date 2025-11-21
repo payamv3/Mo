@@ -55,28 +55,35 @@ if "prolific_id" not in st.session_state:
 if "back_request" not in st.session_state:
     st.session_state.back_request = False
 
-# ⭐ ADDED: GLOBAL BACK HANDLER (runs before rendering steps)
+# ⭐ ADDED: GLOBAL BACK HANDLER (RESPECTS YOUR ORIGINAL LOGIC)
 if st.session_state.back_request:
     st.session_state.back_request = False  # reset flag
 
+    # Step 1 → Step 0
     if st.session_state.step == 1:
         st.session_state.step = 0
         st.session_state.device = None
 
+    # Step 2 → Step 1
     elif st.session_state.step == 2:
         st.session_state.step = 1
         st.session_state.working = None
+        st.session_state.decision = None
 
+    # Step 3 (wipe) → Step 2
     elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.session_state.step = 2
-        st.session_state.decision = None
         st.session_state.unable_to_wipe_message = False
+        st.session_state.decision = None
 
+    # Step 3 (links) → Step 3 (wipe)
     elif st.session_state.step == 3 and st.session_state.wipe_done and not st.session_state.links_done:
         st.session_state.links_done = False
+        st.session_state.wipe_done = False
         st.session_state.step = 3
 
-    elif st.session_state.step == 4 and st.session_state.prolific_id is None:
+    # ⭐ FIXED: Step 4 → Step 3 (links)
+    elif st.session_state.step == 4:
         st.session_state.links_done = False
         st.session_state.step = 3
 
