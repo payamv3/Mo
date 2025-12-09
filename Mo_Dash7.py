@@ -150,7 +150,7 @@ elif st.session_state.step == 2:
 
     st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
-        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – Link shows the Google Map of nearby BestBuy locations. Free electronics recycling at all stores"
+        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – Link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
