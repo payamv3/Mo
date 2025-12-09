@@ -144,6 +144,7 @@ elif st.session_state.step == 2:
     st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
         f"You can try donating your device, for example at:  \n"
+        f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me),  - Link shows Google Map of nearby locations. Accepts working electronics at all locations  \n"
         f"- [Goodwill - Link shows Google Map of nearby locations. Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
         f"- [Salvation Army - Link shows Google Map of nearby locations. Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
     )
