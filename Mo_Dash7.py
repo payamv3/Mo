@@ -59,7 +59,7 @@ st.title("♻️ Mo - The Sustainable Electronics Assistant")
 if st.session_state.step == 0:
     st.markdown('Hello and welcome! I am Mo, your guide for making sustainable choices with smartphones you no longer use at home. We will work together to find the best option, whether that is reselling, donating, or recycling your device. If you experience a timeout, just refresh the page. You will be done when all your questions are answered and you have entered your Prolific ID.')
     devices = sorted(get_all_devices())
-    device_choice = st.selectbox("📱To get started, could you tell me about the smartphone you would like advice on?", [""] + devices)
+    device_choice = st.selectbox("📱To get started, could you tell me about a smartphone that you are no longer using? You can start typing the model of the smartphone, e.g. iPhone SE or Samsung Galaxy, etc.", [""] + devices)
     
     col1, col2 = st.columns(2)
     with col1:
