@@ -144,13 +144,13 @@ elif st.session_state.step == 2:
     st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
         f"You can try donating your device, for example at:  \n"
-        f"- [Goodwill - Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
-        f"- [Salvation Army - Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
+        f"- [Goodwill - Link shows Google Map of nearby locations. Accepts working electronics at all locations](https://www.google.com/maps/search/Goodwill+near+me)  \n"
+        f"- [Salvation Army - Link shows Google Map of nearby locations. Electronics donation accepted](https://www.google.com/maps/search/Salvation+Army+near+me)"
     )
 
     st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
-        f"- [Best Buy – Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"    
+        f"- [Best Buy – Link shows Google Map of nearby locations. Free electronics recycling at all stores](https://www.google.com/maps/search/BestBuy+near+me) \n"    
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
