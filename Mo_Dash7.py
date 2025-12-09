@@ -194,6 +194,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
         )
+        st.markdown(f"If you do not know what Find My is, please [click here](https://www.apple.com/icloud/find-my/)")
         st.markdown(
             "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
        
