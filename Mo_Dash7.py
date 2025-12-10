@@ -3,29 +3,9 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from sellcell_data import get_all_devices, get_sellcell_price
 
-#st.markdown(
-#    """
-#    <style>
-#    html, body, [class*="css"]  {
-#        font-size: 20px !important;
-#    }
-#    </style>
-#    """,
-#    unsafe_allow_html=True
-#)
-
 st.markdown(
     """
     <style>
-    /* Apply Cambria everywhere */
-    html, body, [class*="css"], 
-    .stMarkdown, .stButton, .stTextInput, .stRadio, 
-    .stSelectbox, .stTitle, .stHeader, .stSubheader, 
-    .stText, .stDataFrame, label {
-        font-family: 'Cambria', serif !important;
-    }
-
-    /* Optional: keep your 20px global font size */
     html, body, [class*="css"]  {
         font-size: 20px !important;
     }
@@ -33,6 +13,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
 # -------------------------------
