@@ -196,11 +196,11 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         )
         st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it. If you would like more information on Find My, follow [this link](https://www.apple.com/icloud/find-my/) to the Apple website")
         st.markdown(
-            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
        
         st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
         st.markdown(
-            "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
         st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
@@ -219,7 +219,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
             st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it. If you would like more information on Find My, follow [this link](https://www.apple.com/icloud/find-my/) to the Apple website")
             st.markdown(
-            "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
            
         else:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
@@ -228,7 +228,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
             st.markdown(
-            "- Factory Reset: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
             
 
     col1, col2 = st.columns(2)
@@ -270,7 +270,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com/en-us/buyback/home), [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0)"
         )
         st.markdown(f"By clicking on one of the above website:")
-        st.markdown(f"You will be prompted to choose the model of your smartphone. You will be provided with an offer assuming the battery is in good shape. Then, they will send you a prepaid box for you to ship your smartphone to them.")
+        st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone’s functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer  you will get paid, if you do not, they will ship the phone back to you.")
         st.markdown(f"Next, they will inspect the phone and possibly lower the offer if the battery or other components are not in good shape. You will decide whether to accept the modified offer and if you do, you will get paid. Otherwise they will ship the phone back to you.")
     elif decision == "Donate":
         st.markdown(
