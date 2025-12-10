@@ -14,41 +14,26 @@ from sellcell_data import get_all_devices, get_sellcell_price
 #    unsafe_allow_html=True
 #)
 
-st.markdown("""
+st.markdown(
+    """
     <style>
-    /* ---------- GLOBAL FONT OVERRIDE ---------- */
-    html, body, [class*="css"], .stMarkdown, .stButton, .stTextInput, .stRadio, .stSelectbox, .stTitle, .stHeader, .stSubheader {
+    /* Apply Cambria everywhere */
+    html, body, [class*="css"], 
+    .stMarkdown, .stButton, .stTextInput, .stRadio, 
+    .stSelectbox, .stTitle, .stHeader, .stSubheader, 
+    .stText, .stDataFrame, label {
         font-family: 'Cambria', serif !important;
     }
 
-    /* ---------- FORCE STREAMLIT LIGHT THEME ---------- */
-    /* Override theme variables */
-    :root {
-        --primary-color: #0d6efd;
-        --background-color: #ffffff;
-        --secondary-background-color: #f7f7f7;
-        --text-color: #000000;
-    }
-
-    .stApp {
-        background-color: var(--background-color) !important;
-        color: var(--text-color) !important;
-    }
-
-    /* Fixes dark mode forced by browser/OS */
-    @media (prefers-color-scheme: dark) {
-        html, body, .stApp {
-            background-color: #ffffff !important;
-            color: #000000 !important;
-        }
-    }
-
-    /* Optional: increase font size globally */
-    html, body, [class*="css"] {
+    /* Optional: keep your 20px global font size */
+    html, body, [class*="css"]  {
         font-size: 20px !important;
     }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
+
 
 # -------------------------------
 # Google Sheets helper
