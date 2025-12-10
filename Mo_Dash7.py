@@ -135,11 +135,11 @@ elif st.session_state.step == 2:
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
-            f"The vendor will make you an offer assuming the battery is in good shape. They will check the battery upon receiving the phone and If it turns out that the battery is in poor condition, they will likely adjust the price. Try the following websites to get an estimate of your smartphone's current worth  \n"
+            f"Try the following websites to get an estimate of your smartphone's current worth:  \n"
             f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) -  This link leads to site to get quote to sell your smartphone to BackMarket \n'
             f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) - This link leads to site to get quote to sell your smartphone to Gazelle \n'
         )
-        
+        st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
     st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
