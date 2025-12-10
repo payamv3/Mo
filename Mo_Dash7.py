@@ -280,7 +280,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         st.markdown("You can drop off the smartphone at locations such as the above links. They will likely give you a tax deduction form.")
     elif decision == "Recycle":
         st.markdown(
-            f"- Recycle your **{device}**: [BestBuy Recycling](https://www.google.com/maps/search/BestBuy+near+me)"
+            f"- Recycle your **{device}**: [BestBuy near me](https://www.google.com/maps/search/BestBuy+near+me) - This link shows BestBuy locations close to you."
         )
         st.markdown("You can usually find the recycle bin next to the customer service counter.")
 
