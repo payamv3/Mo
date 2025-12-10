@@ -217,7 +217,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
-            st.markdown(f"If you do not know what Find My is, please [click here](https://www.apple.com/icloud/find-my/)")
+            st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it. If you would like more information on Find My, follow [this link](https://www.apple.com/icloud/find-my/) to the Apple website")
             st.markdown(
             "- Factory Reset: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
            
