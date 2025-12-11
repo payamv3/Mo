@@ -168,7 +168,7 @@ elif st.session_state.step == 2:
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
     else:
-        decision_options = ["Resell", "Recycle"]
+        decision_options = ["Donate", "Recycle"]
 
     decision_choice = st.radio(
         "What option would you like to explore for your device?",
