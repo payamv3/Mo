@@ -150,12 +150,6 @@ elif st.session_state.step == 2:
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
-        st.markdown(
-            f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
-            f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
-        )
-        st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
-
     st.markdown(
         f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
         f"You can try donating your device, for example at:  \n"
@@ -163,6 +157,11 @@ elif st.session_state.step == 2:
         f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
     )
 
+    st.markdown(
+        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
+        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
+    )
+    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
     # Decision options depend on device condition
     if working == "Yes" and device != "Unlisted Model":
