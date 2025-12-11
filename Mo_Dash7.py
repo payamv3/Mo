@@ -60,7 +60,7 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
-st.title("♻️ Mo - The Sustainable Electronics Assistant")
+st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
 
 # -------------------------------
 # Step 0: Device selection
@@ -95,7 +95,7 @@ elif st.session_state.step == 1:
 
     st.write(f"🔋 Does your **{st.session_state.device}** power on and does the battery last for daily use?")
     working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
-    if st.button("Confirm Status") and working_choice:
+    if st.button("Continue") and working_choice:
         st.session_state.working = working_choice
         st.session_state.step = 2
         st.rerun()
