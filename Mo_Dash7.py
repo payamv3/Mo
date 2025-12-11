@@ -253,7 +253,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.warning(
             "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
             "The phone may be non-functional. In these situations, you will have to decide for yourself "
-            "if you feel comfortable recycling or donating phones."
+            "if you feel comfortable recycling or reselling phones."
         )
         if st.button("✅ Proceed anyway"):
             st.session_state.wipe_done = True
