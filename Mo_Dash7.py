@@ -3,6 +3,13 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from sellcell_data import get_all_devices, get_sellcell_price
 
+# Force page scroll to top on rerun
+st.markdown("""
+    <script>
+        window.parent.document.querySelector('section.main').scrollTo(0, 0);
+    </script>
+""", unsafe_allow_html=True)
+
 st.markdown(
     """
     <style>
