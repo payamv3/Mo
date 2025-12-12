@@ -60,10 +60,6 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
-# Internal flag used to allow the user one render of wipe instructions for unlisted working phones,
-# and then advance automatically to links (so they "see" the wipe instructions but the step is skipped).
-if "unlisted_wipe_shown_once" not in st.session_state:
-    st.session_state.unlisted_wipe_shown_once = False
 
 st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
 
@@ -85,10 +81,9 @@ if st.session_state.step == 0:
             st.rerun()
     with col2:
         if st.button("📵 My phone is not in the list"):
-            # send to the working question so the user can declare the phone is working or not
             st.session_state.device = "Unlisted Model"
-            st.session_state.working = None
-            st.session_state.step = 1
+            st.session_state.working = "No Info"
+            st.session_state.step = 2
             st.rerun()
 
 
@@ -120,12 +115,10 @@ elif st.session_state.step == 2:
     device = st.session_state.device
     working = st.session_state.working
 
-    # NOTE: Do NOT override 'working' for Unlisted Model here.
-    # We rely on the user's answer from Step 1 (working variable).
-
-    # If the device is unlisted, show the sellable-model warning but keep working value unchanged.
+    # Special case for unlisted device
     if device == "Unlisted Model":
         st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
+        working = "No"
 
     # Working → try resale price
     if working == "Yes":
@@ -143,25 +136,15 @@ elif st.session_state.step == 2:
             st.success(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
-    # Keep the non-working info behavior only when working != "Yes" (so unlisted+Yes won't show the broken-device info here)
-    elif working is not None and working != "Yes":
-        st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
+    #else:
+    #    st.info("⚠️ If your device is not working, resale or donation may not be possible.")
 
     st.markdown("### 💡 Here are your options:")
 
-    # Important: for Unlisted Model we now respect the user's working answer:
-    # - if working == "Yes" -> show donate (and optionally resell text as you prefer), and route will go to wipe instructions in step 3
-    # - if working != "Yes" -> keep donation+recycle only and then go to warning flow
     if working == "Yes" and device != "Unlisted Model":
         show_resell = True
         show_donate = True
-    elif device == "Unlisted Model" and working == "Yes":
-        # Unlisted but working → show same Resell/Donate/Recycle options as working devices (so they still see options and can choose)
-        # You said previously you don't want to change textual content; we only alter logic so the wipe flow appears next.
-        show_resell = True
-        show_donate = True
     elif device == "Unlisted Model":
-        # Unlisted and not-working (or unknown) -> no resell text, show donate text
         show_resell = False
         show_donate = True
     else:
@@ -192,12 +175,8 @@ elif st.session_state.step == 2:
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
-    # Choices - respect unlisted & working combination
+    # Choices
     if working == "Yes" and device != "Unlisted Model":
-        decision_options = ["Resell", "Donate", "Recycle"]
-    elif device == "Unlisted Model" and working == "Yes":
-        # Unlisted but working → let user pick from the same options as working devices,
-        # so they will be routed to the wiping instructions page next.
         decision_options = ["Resell", "Donate", "Recycle"]
     elif device == "Unlisted Model":
         decision_options = ["Donate","Recycle"]
@@ -209,19 +188,14 @@ elif st.session_state.step == 2:
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
 
-        # Non-working path -> show warning first (existing behavior)
+        # *** FIXED LOGIC — non-working phones show warning first ***
         if working != "Yes":
             st.session_state.unable_to_wipe_message = True
-            st.session_state.wipe_done = False   # keep the warning flow
+            st.session_state.wipe_done = False   # IMPORTANT FIX
             st.session_state.step = 3
             st.rerun()
 
-        # Working path -> step to wiping instructions
-        # For unlisted & working, we want the wiping instructions to be shown (Step 3),
-        # and then automatically continue (skip wipe) after the user has seen them.
         st.session_state.step = 3
-        # reset the unlisted-wipe-shown flag when entering Step 3
-        st.session_state.unlisted_wipe_shown_once = False
         st.rerun()
 
 
@@ -230,7 +204,7 @@ elif st.session_state.step == 2:
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
-    # If the page was reached because we determined wiping was impossible/they clicked unable, show the warning page
+    # ** FIX: Show Back button + warning page for non-working phones **
     if st.session_state.unable_to_wipe_message:
 
         if st.button("⬅️ Back"):
@@ -250,7 +224,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
         st.stop()
 
-    # Normal back button for wipe page
     if st.button("⬅️ Back"):
         st.session_state.step = 2
         st.rerun()
@@ -261,7 +234,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
     st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
     st.markdown(f"To remove data, see this guide:")
 
-    # Show wipe instructions: Unlisted Model and listed devices use the same instructions
     if device == "Unlisted Model":
         st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
         st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
@@ -325,25 +297,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         if st.button("✅ Proceed anyway"):
             st.session_state.wipe_done = True
             st.rerun()
-
-    # ---- NEW: If the device is unlisted AND the user indicated it is working,
-    # show the wiping instructions (they're above) and then automatically continue.
-    # We use a small internal flag so the user gets to *see* the instructions once,
-    # then the app advances to links (skipping an explicit wipe step).
-    if device == "Unlisted Model" and st.session_state.working == "Yes":
-        # If we've already displayed them once, advance to links.
-        if st.session_state.unlisted_wipe_shown_once:
-            st.session_state.wipe_done = True
-            st.rerun()
-        else:
-            # Mark that we've shown them once and allow current render to display the instructions.
-            st.session_state.unlisted_wipe_shown_once = True
-            # Do NOT rerun here — user sees instructions in this render. On the next run (triggered by session_state change),
-            # the branch above will set wipe_done True and advance.
-            # Note: setting unlisted_wipe_shown_once triggers a rerun automatically in Streamlit; that causes one immediate rerun,
-            # so the instructions will be visible briefly and then the app will advance to links. This matches the requested behavior:
-            # user sees wiping instructions, and wiping is skipped.
-            pass
 
 
 # -------------------------------
