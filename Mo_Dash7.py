@@ -147,7 +147,7 @@ elif st.session_state.step == 2:
         show_donate = True
     elif device == "Unlisted Model" and working != "Yes":
         show_resell = False
-        show_donate = False
+        show_donate = True
     else:
         show_resell = True
         show_donate = False
@@ -182,7 +182,7 @@ elif st.session_state.step == 2:
     elif device == "Unlisted Model" and working == "Yes":
         decision_options = ["Donate","Recycle"]
     elif device == "Unlisted Model" and working != "Yes":
-        decision_options = ["Recycle"]
+        decision_options = ["Recycle","Donate"]
     else:
         decision_options = ["Resell", "Recycle"]
 
