@@ -178,6 +178,8 @@ elif st.session_state.step == 2:
     # Choices
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
+    elif device == "Unlisted Model":
+        decision_options = ["Donate","Recycle"]
     else:
         decision_options = ["Resell", "Recycle"]
 
