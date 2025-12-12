@@ -21,6 +21,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
 # -------------------------------
 # Google Sheets helper
 # -------------------------------
@@ -59,7 +60,9 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
+
 st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+
 
 # -------------------------------
 # Step 0: Device selection
@@ -79,8 +82,10 @@ if st.session_state.step == 0:
     with col2:
         if st.button("📵 My phone is not in the list"):
             st.session_state.device = "Unlisted Model"
-            st.session_state.step = 1  # go to working check
+            st.session_state.working = "No Info"
+            st.session_state.step = 2
             st.rerun()
+
 
 # -------------------------------
 # Step 1: Working / Not working
@@ -98,6 +103,7 @@ elif st.session_state.step == 1:
         st.session_state.step = 2
         st.rerun()
 
+
 # -------------------------------
 # Step 2: Resale/Donate/Recycle info
 # -------------------------------
@@ -109,11 +115,13 @@ elif st.session_state.step == 2:
     device = st.session_state.device
     working = st.session_state.working
 
-    if device == "Unlisted Model" and working == "Yes":
-        st.warning("📵 Your phone is not listed as a sellable model, so resale is not available. You can donate or recycle it.")
+    # Special case for unlisted device
+    if device == "Unlisted Model":
+        st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
+        working = "No"
 
-    # Try resale price if listed and working
-    if working == "Yes" and device != "Unlisted Model":
+    # Working → try resale price
+    if working == "Yes":
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
         for cond in conditions:
@@ -123,10 +131,13 @@ elif st.session_state.step == 2:
                     max_price = price_data["price"]
             except Exception:
                 continue
+
         if max_price > 0:
             st.success(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
+    #else:
+    #    st.info("⚠️ If your device is not working, resale or donation may not be possible.")
 
     st.markdown("### 💡 Here are your options:")
 
@@ -134,7 +145,7 @@ elif st.session_state.step == 2:
         show_resell = True
         show_donate = True
     elif device == "Unlisted Model":
-        show_resell = False  # C) Unlisted + working → no resell
+        show_resell = False
         show_donate = True
     else:
         show_resell = True
@@ -145,8 +156,8 @@ elif st.session_state.step == 2:
         st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
             f"Try the following websites to get an estimate of your smartphone's current worth:  \n"
-            f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) \n'
-            f'- [Gazelle](https://www.gazelle.com/trade-in)\n'
+            f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) -  This link leads to site to get quote to sell your smartphone to BackMarket \n'
+            f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) - This link leads to site to get quote to sell your smartphone to Gazelle \n'
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
@@ -154,16 +165,17 @@ elif st.session_state.step == 2:
         st.markdown(
             f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
             f"You can try donating your device, for example at:  \n"
-            f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) \n"
-            f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me)"
+            f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) - This link shows the Google Map of nearby Goodwill locations. They accept working electronics at all locations\n"
+            f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
         )
 
     st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
-        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)"
+        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
     )
+    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
-    # Choice options
+    # Choices
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
     elif device == "Unlisted Model":
@@ -175,33 +187,41 @@ elif st.session_state.step == 2:
 
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
-        # Non-working phones show warning first
+
+        # *** FIXED LOGIC — non-working phones show warning first ***
         if working != "Yes":
             st.session_state.unable_to_wipe_message = True
-            st.session_state.wipe_done = False
-            st.session_state.step = 3
-            st.rerun()
-        else:
+            st.session_state.wipe_done = False   # IMPORTANT FIX
             st.session_state.step = 3
             st.rerun()
 
+        st.session_state.step = 3
+        st.rerun()
+
+
 # -------------------------------
-# Step 3: Wipe instructions / warning
+# Step 3: Wipe instructions
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
+
+    # ** FIX: Show Back button + warning page for non-working phones **
     if st.session_state.unable_to_wipe_message:
+
         if st.button("⬅️ Back"):
             st.session_state.unable_to_wipe_message = False
             st.session_state.step = 2
             st.rerun()
+
         st.warning(
             "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
             "The phone may be non-functional. In these situations, you will have to decide for yourself "
             "if you feel comfortable recycling or reselling phones."
         )
+
         if st.button("✅ Proceed anyway"):
             st.session_state.wipe_done = True
             st.rerun()
+
         st.stop()
 
     if st.button("⬅️ Back"):
@@ -212,17 +232,50 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
     decision = st.session_state.decision
 
     st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
-    st.markdown("To remove data, see this guide:")
+    st.markdown(f"To remove data, see this guide:")
 
-    # Show guides
-    if device == "Unlisted Model" or "iphone" in device.lower():
-        st.markdown("#### For iPhones (iOS), disable Find My and then wipe:")
-        st.markdown("- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)")
-        st.markdown("- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+    if device == "Unlisted Model":
+        st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(
+            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
+        )
+        st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it. If you would like more information on Find My, follow [this link](https://www.apple.com/icloud/find-my/) to the Apple website")
+        st.markdown(
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+       
+        st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+        st.markdown(
+            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+        )
+        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        st.markdown(
+            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
+        )
+        
     else:
-        st.markdown("#### For Android phones, remove from Google account and then wipe:")
-        st.markdown("- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)")
-        st.markdown("- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+        os_type = "ios" if "iphone" in device.lower() else "android"
+        if os_type == "ios":
+            st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+            st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+            st.markdown(
+            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
+            st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it.")
+            st.markdown(
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+           
+        else:
+            st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+            st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+            st.markdown(
+            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
+            st.markdown(
+            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+            
 
     col1, col2 = st.columns(2)
     with col1:
@@ -235,6 +288,17 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
                 st.session_state.unable_to_wipe_message = True
                 st.rerun()
 
+    if st.session_state.unable_to_wipe_message:
+        st.warning(
+            "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
+            "The phone may be non-functional. In these situations, you will have to decide for yourself "
+            "if you feel comfortable recycling or reselling phones."
+        )
+        if st.button("✅ Proceed anyway"):
+            st.session_state.wipe_done = True
+            st.rerun()
+
+
 # -------------------------------
 # Step 4: Show decision-specific links
 # -------------------------------
@@ -246,29 +310,54 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
 
     device = st.session_state.device
     decision = st.session_state.decision
+
     st.markdown("🌍 Here are the links for your chosen action:")
 
     if decision == "Resell":
-        st.markdown(f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com/en-us/buyback/home), [Gazelle](https://www.gazelle.com/trade-in)")
+        st.markdown(
+            f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com/en-us/buyback/home), [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0)"
+        )
+        st.markdown(f"By clicking on one of the above website:")
+        st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone’s functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
+
     elif decision == "Donate":
-        st.markdown(f"- Donate your **{device}**: [Goodwill](https://www.google.com/maps/search/Goodwill+near+me), [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me)")
+        st.markdown(
+            f"- Donate your **{device}**: "
+            f"[Goodwill near me](https://www.google.com/maps/search/Goodwill+near+me), "
+            f"[Salvation Army near me](https://www.google.com/maps/search/Salvation+Army+near+me)"    
+        )
+        st.markdown("You can drop off the smartphone at locations such as the above links. They will likely give you a tax deduction form.")
+
     elif decision == "Recycle":
-        st.markdown(f"- Recycle your **{device}**: [BestBuy](https://www.google.com/maps/search/BestBuy+near+me)")
+        st.markdown(
+            f"- Recycle your **{device}**: [BestBuy near me](https://www.google.com/maps/search/BestBuy+near+me) - This link shows BestBuy locations close to you."
+        )
+        st.markdown("You can usually find the recycle bin next to the customer service counter.")
 
     if st.button("✅ Done viewing links"):
         st.session_state.links_done = True
         st.session_state.step = 4
         st.rerun()
 
+
 # -------------------------------
 # Step 5: Prolific ID submission
 # -------------------------------
 elif st.session_state.step == 4 and st.session_state.prolific_id is None:
     prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:")
+
     if prolific_id_input:
-        save_to_google_sheet(prolific_id_input, st.session_state.device, st.session_state.decision, st.session_state.working)
+        save_to_google_sheet(
+            prolific_id_input,
+            st.session_state.device,
+            st.session_state.decision,
+            st.session_state.working,
+        )
         st.session_state.prolific_id = prolific_id_input
-        st.success(f"🎉 Thank you! Your Prolific ID **{prolific_id_input}** has been recorded. Have a sustainable day!")
+        st.success(
+            f"🎉 Thank you! Your Prolific ID **{prolific_id_input}** has been recorded. Have a sustainable day!"
+        )
+
 
 # -------------------------------
 # Step 6: Already submitted
