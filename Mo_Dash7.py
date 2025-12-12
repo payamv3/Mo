@@ -120,9 +120,7 @@ elif st.session_state.step == 2:
         st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
         working = "No"
 
-    # -------------------------
-    # Working case: show resale price
-    # -------------------------
+    # Working → try resale price
     if working == "Yes":
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
@@ -138,31 +136,18 @@ elif st.session_state.step == 2:
             st.success(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
-
-    # -------------------------
-    # Not working case: show non-functional warning
-    # -------------------------
-    else:  
+    else:
         st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
 
     st.markdown("### 💡 Here are your options:")
 
-    # -------------------------
-    # REQUIRED CHANGE #1:
-    # If the phone is NOT working: show **Resell + Recycle** text
-    # Donation text is NOT shown.
-    # -------------------------
     if working == "Yes" and device != "Unlisted Model":
         show_resell = True
         show_donate = True
     else:
-        show_resell = True   # forced by user request
-        show_donate = False  # hide donation text for non-working devices
+        show_resell = True
+        show_donate = False
 
-    # -------------------------
-    # Resell text
-    # (Shown ALWAYS when show_resell = True — text unchanged)
-    # -------------------------
     if show_resell:
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
@@ -173,9 +158,6 @@ elif st.session_state.step == 2:
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
-    # -------------------------
-    # Donation text (only for working devices)
-    # -------------------------
     if show_donate:
         st.markdown(
             f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
@@ -184,21 +166,13 @@ elif st.session_state.step == 2:
             f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
         )
 
-    # -------------------------
-    # Recycle text (always shown)
-    # -------------------------
     st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
         f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
-
-    # -------------------------
-    # Decision options:
-    # REQUIRED CHANGE:
-    # If NOT working → only Resell, Recycle
-    # -------------------------
+    # Choices
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
     else:
@@ -209,10 +183,10 @@ elif st.session_state.step == 2:
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
 
-        # REQUIRED CHANGE: If NOT working → skip wipe step
+        # *** FIXED LOGIC — non-working phones show warning first ***
         if working != "Yes":
             st.session_state.unable_to_wipe_message = True
-            st.session_state.wipe_done = False      # ensure warning screen appears
+            st.session_state.wipe_done = False   # IMPORTANT FIX
             st.session_state.step = 3
             st.rerun()
 
@@ -225,18 +199,24 @@ elif st.session_state.step == 2:
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
+    # ** FIX: Show Back button + warning page for non-working phones **
     if st.session_state.unable_to_wipe_message:
-        # REQUIRED CHANGE #1:
-        # Show warning box only
+
+        if st.button("⬅️ Back"):
+            st.session_state.unable_to_wipe_message = False
+            st.session_state.step = 2
+            st.rerun()
+
         st.warning(
             "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
             "The phone may be non-functional. In these situations, you will have to decide for yourself "
             "if you feel comfortable recycling or reselling phones."
         )
+
         if st.button("✅ Proceed anyway"):
             st.session_state.wipe_done = True
             st.rerun()
-        # REQUIRED CHANGE #2: unable-to-wipe button disappears automatically
+
         st.stop()
 
     if st.button("⬅️ Back"):
@@ -298,30 +278,20 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.session_state.wipe_done = True
             st.rerun()
     with col2:
-        # REQUIRED CHANGE #2 — remove this button once clicked
         if not st.session_state.unable_to_wipe_message:
             if st.button("⚠️ I was unable to wipe"):
                 st.session_state.unable_to_wipe_message = True
                 st.rerun()
 
-
     if st.session_state.unable_to_wipe_message:
-    if st.button("⬅️ Back"):
-        st.session_state.unable_to_wipe_message = False
-        st.session_state.step = 2
-        st.rerun()
-
-    st.warning(
-        "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
-        "The phone may be non-functional. In these situations, you will have to decide for yourself "
-        "if you feel comfortable recycling or reselling phones."
-    )
-
-    if st.button("✅ Proceed anyway"):
-        st.session_state.wipe_done = True
-        st.rerun()
-
-    st.stop()
+        st.warning(
+            "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
+            "The phone may be non-functional. In these situations, you will have to decide for yourself "
+            "if you feel comfortable recycling or reselling phones."
+        )
+        if st.button("✅ Proceed anyway"):
+            st.session_state.wipe_done = True
+            st.rerun()
 
 
 # -------------------------------
