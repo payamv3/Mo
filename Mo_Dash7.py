@@ -212,8 +212,8 @@ elif st.session_state.step == 2:
         # REQUIRED CHANGE: If NOT working → skip wipe step
         if working != "Yes":
             st.session_state.unable_to_wipe_message = True
+            st.session_state.wipe_done = False      # ensure warning screen appears
             st.session_state.step = 3
-            st.session_state.wipe_done = True  # skip wiping entirely
             st.rerun()
 
         st.session_state.step = 3
@@ -304,15 +304,24 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
                 st.session_state.unable_to_wipe_message = True
                 st.rerun()
 
+
     if st.session_state.unable_to_wipe_message:
-        st.warning(
-            "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
-            "The phone may be non-functional. In these situations, you will have to decide for yourself "
-            "if you feel comfortable recycling or reselling phones."
-        )
-        if st.button("✅ Proceed anyway"):
-            st.session_state.wipe_done = True
-            st.rerun()
+    if st.button("⬅️ Back"):
+        st.session_state.unable_to_wipe_message = False
+        st.session_state.step = 2
+        st.rerun()
+
+    st.warning(
+        "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
+        "The phone may be non-functional. In these situations, you will have to decide for yourself "
+        "if you feel comfortable recycling or reselling phones."
+    )
+
+    if st.button("✅ Proceed anyway"):
+        st.session_state.wipe_done = True
+        st.rerun()
+
+    st.stop()
 
 
 # -------------------------------
