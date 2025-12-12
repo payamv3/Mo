@@ -80,11 +80,11 @@ if st.session_state.step == 0:
             st.session_state.step = 1
             st.rerun()
     with col2:
-        if st.button("📵 My phone is not in the list"):
-            st.session_state.device = "Unlisted Model"
-            st.session_state.working = "No Info"
-            st.session_state.step = 2
-            st.rerun()
+    if st.button("📵 My phone is not in the list"):
+        st.session_state.device = "Unlisted Model"
+        st.session_state.working = None
+        st.session_state.step = 1
+        st.rerun()
 
 
 # -------------------------------
