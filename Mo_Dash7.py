@@ -82,8 +82,7 @@ if st.session_state.step == 0:
     with col2:
         if st.button("📵 My phone is not in the list"):
             st.session_state.device = "Unlisted Model"
-            st.session_state.working = "No Info"
-            st.session_state.step = 2
+            st.session_state.step = 1
             st.rerun()
 
 
@@ -118,10 +117,9 @@ elif st.session_state.step == 2:
     # Special case for unlisted device
     if device == "Unlisted Model":
         st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
-        working = "No"
 
     # Working → try resale price
-    if working == "Yes":
+    if working == "Yes" and device != "Unlisted Model":
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
         for cond in conditions:
@@ -144,16 +142,19 @@ elif st.session_state.step == 2:
     if working == "Yes" and device != "Unlisted Model":
         show_resell = True
         show_donate = True
-    elif device == "Unlisted Model":
+    elif device == "Unlisted Model" and working == "Yes":
         show_resell = False
         show_donate = True
+    elif device == "Unlisted Model" and working != "Yes":
+        show_resell = False
+        show_donate = False
     else:
         show_resell = True
         show_donate = False
 
     if show_resell:
         st.markdown("**Resell:** You could earn some cash by selling your old phone.")
-        st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
+        st.markdown( f"**It's easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
             f"Try the following websites to get an estimate of your smartphone's current worth:  \n"
             f'- [BackMarket](https://www.backmarket.com/en-us/buyback/home) -  This link leads to site to get quote to sell your smartphone to BackMarket \n'
@@ -178,8 +179,10 @@ elif st.session_state.step == 2:
     # Choices
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
-    elif device == "Unlisted Model":
+    elif device == "Unlisted Model" and working == "Yes":
         decision_options = ["Donate","Recycle"]
+    elif device == "Unlisted Model" and working != "Yes":
+        decision_options = ["Recycle"]
     else:
         decision_options = ["Resell", "Recycle"]
 
@@ -188,10 +191,9 @@ elif st.session_state.step == 2:
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
 
-        # *** FIXED LOGIC — non-working phones show warning first ***
         if working != "Yes":
             st.session_state.unable_to_wipe_message = True
-            st.session_state.wipe_done = False   # IMPORTANT FIX
+            st.session_state.wipe_done = False
             st.session_state.step = 3
             st.rerun()
 
@@ -204,7 +206,6 @@ elif st.session_state.step == 2:
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
-    # ** FIX: Show Back button + warning page for non-working phones **
     if st.session_state.unable_to_wipe_message:
 
         if st.button("⬅️ Back"):
@@ -236,7 +237,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
     if device == "Unlisted Model":
         st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
-        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
@@ -249,7 +250,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(
             "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
-        st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
         st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
@@ -259,7 +260,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
             st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
-            st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
@@ -269,7 +270,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
            
         else:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
-            st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
@@ -279,7 +280,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("✅ I’ve wiped my device"):
+        if st.button("✅ I've wiped my device"):
             st.session_state.wipe_done = True
             st.rerun()
     with col2:
@@ -318,7 +319,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com/en-us/buyback/home), [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0)"
         )
         st.markdown(f"By clicking on one of the above website:")
-        st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone’s functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
+        st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone's functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
 
     elif decision == "Donate":
         st.markdown(
