@@ -136,8 +136,8 @@ elif st.session_state.step == 2:
             st.success(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
-    else:
-        st.info("⚠️ If your device is not working, resale or donation may not be possible.")
+    #else:
+    #    st.info("⚠️ If your device is not working, resale or donation may not be possible.")
 
     st.markdown("### 💡 Here are your options:")
 
@@ -152,7 +152,7 @@ elif st.session_state.step == 2:
         show_donate = False
 
     if show_resell:
-        st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
+        st.markdown("**Resell:** You could earn some cash by selling your old phone.")
         st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
             f"Try the following websites to get an estimate of your smartphone's current worth:  \n"
