@@ -22,14 +22,13 @@ st.markdown(
 )
 
 
-
 # -------------------------------
 # Google Sheets helper
 # -------------------------------
 def get_google_sheet(sheet_name):
     scope = ["https://spreadsheets.google.com/feeds",
              "https://www.googleapis.com/auth/drive"]
-    sa_info = st.secrets["google_service_account"]  # Use Streamlit Secrets
+    sa_info = st.secrets["google_service_account"]
     creds = ServiceAccountCredentials.from_json_keyfile_dict(sa_info, scope)
     client = gspread.authorize(creds)
     sheet = client.open(sheet_name).sheet1
@@ -39,6 +38,7 @@ def save_to_google_sheet(prolific_id, device, decision, working):
     sheet = get_google_sheet("ProlificIDs")
     sheet.append_row([prolific_id, device, decision, working])
     st.success("✅ Data saved to Google Sheet!")
+
 
 # -------------------------------
 # Session state
@@ -60,7 +60,9 @@ if "unable_to_wipe_message" not in st.session_state:
 if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
+
 st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+
 
 # -------------------------------
 # Step 0: Device selection
@@ -84,27 +86,28 @@ if st.session_state.step == 0:
             st.session_state.step = 2
             st.rerun()
 
+
 # -------------------------------
 # Step 1: Working / Not working
 # -------------------------------
 elif st.session_state.step == 1:
-    # Back button
     if st.button("⬅️ Back"):
         st.session_state.step = 0
         st.rerun()
 
     st.write(f"🔋 Does your **{st.session_state.device}** power on and does the battery last for daily use?")
     working_choice = st.radio("Select one:", ["Yes", "No/I do not know"], index=0)
+
     if st.button("Continue") and working_choice:
         st.session_state.working = working_choice
         st.session_state.step = 2
         st.rerun()
 
+
 # -------------------------------
-# Step 2: Show resale value if working + enriched info under each option
+# Step 2: Resale/Donate/Recycle info
 # -------------------------------
 elif st.session_state.step == 2:
-    # Back button
     if st.button("⬅️ Back"):
         st.session_state.step = 1
         st.rerun()
@@ -112,12 +115,15 @@ elif st.session_state.step == 2:
     device = st.session_state.device
     working = st.session_state.working
 
+    # Special case for unlisted device
     if device == "Unlisted Model":
         st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
-        working = "No"  # Disable resale path for unlisted model
+        working = "No"
 
-    elif working == "Yes":
-        # Show highest resale price
+    # -------------------------
+    # Working case: show resale price
+    # -------------------------
+    if working == "Yes":
         conditions = ["Mint", "Good", "Fair", "Poor"]
         max_price = 0
         for cond in conditions:
@@ -133,14 +139,31 @@ elif st.session_state.step == 2:
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
 
-    else:
+    # -------------------------
+    # Not working case: show non-functional warning
+    # -------------------------
+    else:  
         st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
 
-    # Show information under each option
     st.markdown("### 💡 Here are your options:")
 
-    # Show Resell info only if applicable
+    # -------------------------
+    # REQUIRED CHANGE #1:
+    # If the phone is NOT working: show **Resell + Recycle** text
+    # Donation text is NOT shown.
+    # -------------------------
     if working == "Yes" and device != "Unlisted Model":
+        show_resell = True
+        show_donate = True
+    else:
+        show_resell = True   # forced by user request
+        show_donate = False  # hide donation text for non-working devices
+
+    # -------------------------
+    # Resell text
+    # (Shown ALWAYS when show_resell = True — text unchanged)
+    # -------------------------
+    if show_resell:
         st.markdown("**Resell:** You could earn some cash by selling your old phone if it is in working condition, and it can hold charge for a day's use.")
         st.markdown( f"**It’s easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
@@ -150,40 +173,72 @@ elif st.session_state.step == 2:
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
-    st.markdown(
-        f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
-        f"You can try donating your device, for example at:  \n"
-        f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) - This link shows the Google Map of nearby Goodwill locations. They accept working electronics at all locations\n"
-        f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
-    )
+    # -------------------------
+    # Donation text (only for working devices)
+    # -------------------------
+    if show_donate:
+        st.markdown(
+            f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
+            f"You can try donating your device, for example at:  \n"
+            f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) - This link shows the Google Map of nearby Goodwill locations. They accept working electronics at all locations\n"
+            f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
+        )
 
+    # -------------------------
+    # Recycle text (always shown)
+    # -------------------------
     st.markdown(
         f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
         f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
     )
     st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
-    # Decision options depend on device condition
+
+    # -------------------------
+    # Decision options:
+    # REQUIRED CHANGE:
+    # If NOT working → only Resell, Recycle
+    # -------------------------
     if working == "Yes" and device != "Unlisted Model":
         decision_options = ["Resell", "Donate", "Recycle"]
     else:
-        decision_options = ["Donate", "Recycle"]
+        decision_options = ["Resell", "Recycle"]
 
-    decision_choice = st.radio(
-        "What option would you like to explore for your device?",
-        decision_options
-    )
+    decision_choice = st.radio("What option would you like to explore for your device?", decision_options)
 
     if st.button("Confirm Choice") and decision_choice:
         st.session_state.decision = decision_choice
+
+        # REQUIRED CHANGE: If NOT working → skip wipe step
+        if working != "Yes":
+            st.session_state.unable_to_wipe_message = True
+            st.session_state.step = 3
+            st.session_state.wipe_done = True  # skip wiping entirely
+            st.rerun()
+
         st.session_state.step = 3
         st.rerun()
 
+
 # -------------------------------
-# Step 3: Wipe instructions with buttons
+# Step 3: Wipe instructions
 # -------------------------------
 elif st.session_state.step == 3 and not st.session_state.wipe_done:
-    # Back button
+
+    if st.session_state.unable_to_wipe_message:
+        # REQUIRED CHANGE #1:
+        # Show warning box only
+        st.warning(
+            "⚠️ Sometimes it becomes too difficult or impossible to erase your data. "
+            "The phone may be non-functional. In these situations, you will have to decide for yourself "
+            "if you feel comfortable recycling or reselling phones."
+        )
+        if st.button("✅ Proceed anyway"):
+            st.session_state.wipe_done = True
+            st.rerun()
+        # REQUIRED CHANGE #2: unable-to-wipe button disappears automatically
+        st.stop()
+
     if st.button("⬅️ Back"):
         st.session_state.step = 2
         st.rerun()
@@ -193,9 +248,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
     st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
     st.markdown(f"To remove data, see this guide:")
-    
 
-    # Show both iOS and Android guides if the phone is unlisted
     if device == "Unlisted Model":
         st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
         st.markdown(f"Smart phones are usually linked to a user’s account, it cannot be used by someone else unless you remove it from list of devices owned.")
@@ -218,7 +271,6 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         )
         
     else:
-        # Normal OS-based behavior
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
             st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
@@ -246,8 +298,11 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.session_state.wipe_done = True
             st.rerun()
     with col2:
-        if st.button("⚠️ I was unable to wipe"):
-            st.session_state.unable_to_wipe_message = True
+        # REQUIRED CHANGE #2 — remove this button once clicked
+        if not st.session_state.unable_to_wipe_message:
+            if st.button("⚠️ I was unable to wipe"):
+                st.session_state.unable_to_wipe_message = True
+                st.rerun()
 
     if st.session_state.unable_to_wipe_message:
         st.warning(
@@ -259,11 +314,11 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.session_state.wipe_done = True
             st.rerun()
 
+
 # -------------------------------
 # Step 4: Show decision-specific links
 # -------------------------------
 elif st.session_state.step == 3 and st.session_state.wipe_done and not st.session_state.links_done:
-    # Back button
     if st.button("⬅️ Back"):
         st.session_state.step = 3
         st.session_state.wipe_done = False
@@ -280,6 +335,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         )
         st.markdown(f"By clicking on one of the above website:")
         st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone’s functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
+
     elif decision == "Donate":
         st.markdown(
             f"- Donate your **{device}**: "
@@ -287,6 +343,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
             f"[Salvation Army near me](https://www.google.com/maps/search/Salvation+Army+near+me)"    
         )
         st.markdown("You can drop off the smartphone at locations such as the above links. They will likely give you a tax deduction form.")
+
     elif decision == "Recycle":
         st.markdown(
             f"- Recycle your **{device}**: [BestBuy near me](https://www.google.com/maps/search/BestBuy+near+me) - This link shows BestBuy locations close to you."
@@ -298,8 +355,9 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
         st.session_state.step = 4
         st.rerun()
 
+
 # -------------------------------
-# Step 5: Prolific ID
+# Step 5: Prolific ID submission
 # -------------------------------
 elif st.session_state.step == 4 and st.session_state.prolific_id is None:
     prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:")
@@ -315,6 +373,7 @@ elif st.session_state.step == 4 and st.session_state.prolific_id is None:
         st.success(
             f"🎉 Thank you! Your Prolific ID **{prolific_id_input}** has been recorded. Have a sustainable day!"
         )
+
 
 # -------------------------------
 # Step 6: Already submitted
