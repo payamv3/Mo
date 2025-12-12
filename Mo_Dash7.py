@@ -137,7 +137,7 @@ elif st.session_state.step == 2:
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
     else:
-        st.info("⚠️ Since your device is not working, resale or donation may not be possible.")
+        st.info("⚠️ If your device is not working, resale or donation may not be possible.")
 
     st.markdown("### 💡 Here are your options:")
 
