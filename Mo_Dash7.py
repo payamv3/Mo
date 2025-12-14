@@ -80,7 +80,7 @@ if st.session_state.step == 0:
             st.session_state.step = 1
             st.rerun()
     with col2:
-        if st.button("📵 My phone is not in the list"):
+        if st.button("📵 Model unknown or not listed"):
             st.session_state.device = "Unlisted Model"
             st.session_state.step = 1
             st.rerun()
@@ -116,7 +116,7 @@ elif st.session_state.step == 2:
 
     # Special case for unlisted device
     if device == "Unlisted Model":
-        st.warning("📵 Your phone is not listed as a sellable model, so your options are donating or recycling.")
+        st.warning("📵 Because the model is needed to resell the phone, your options are Donate or Recycle.")
 
     # Working → try resale price
     if working == "Yes" and device != "Unlisted Model":
