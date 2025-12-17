@@ -130,12 +130,12 @@ elif st.session_state.step == 2:
             except Exception:
                 continue
 
-        if max_price > 0:
+        #if max_price > 0:
             #st.markdown(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
-            st.markdown(f"<p style='font-size: 30x;'>💰 Your {device} can fetch up to ${max_price} on resale!</p>", unsafe_allow_html=True)
+        #    st.markdown(f"<p style='font-size: 30x;'>💰 Your {device} can fetch up to ${max_price} on resale!</p>", unsafe_allow_html=True)
             
-        else:
-            st.info(f"ℹ️ Could not find resale price for {device}.")
+        #else:
+        #    st.info(f"ℹ️ Could not find resale price for {device}.")
     #else:
     #    st.info("⚠️ If your device is not working, resale or donation may not be possible.")
 
@@ -169,12 +169,7 @@ elif st.session_state.step == 2:
             f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) - This link leads to site to get quote to sell your smartphone to Gazelle \n'
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
-        if max_price > 0:
-            #st.markdown(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
-            st.markdown(f"<p style='font-size: 30x;'>💰 Your {device} can fetch up to ${max_price} on resale!</p>", unsafe_allow_html=True)
-            
-        else:
-            st.info(f"ℹ️ Could not find resale price for {device}.")
+        
 
     if show_donate:
         st.markdown(
