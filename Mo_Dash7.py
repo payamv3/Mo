@@ -241,7 +241,8 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
     device = st.session_state.device
     decision = st.session_state.decision
 
-    st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
+    #st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
+    st.markdown(f"<p style='font-size: 30x;'>🔒 Before you {decision.lower()} your device, please be sure to wipe your data</p>", unsafe_allow_html=True)
     st.markdown(f"To remove data, see this guide:")
 
     if device == "Unlisted Model":
