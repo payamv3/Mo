@@ -131,7 +131,9 @@ elif st.session_state.step == 2:
                 continue
 
         if max_price > 0:
-            st.markdown('###f"💰 Your **{device}** can fetch up to **${max_price}** on resale!"')
+            #st.markdown(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
+            st.markdown(f"<p style='font-size: 24px;'>💰 Your **{device}** can fetch up to **${max_price}** on resale!</p>", unsafe_allow_html=True)
+            
         else:
             st.info(f"ℹ️ Could not find resale price for {device}.")
     #else:
