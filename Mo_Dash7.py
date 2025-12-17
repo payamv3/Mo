@@ -256,7 +256,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
         )
-        st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device ")
+        st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
         st.markdown(
             "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
         st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
@@ -279,9 +279,10 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
-            st.markdown(f"Find My is a function built into Apple products that registers all of your owned devices with your Apple account. In addition to being useful to find a device if you misplace it, Find My also locks it down from being used by other people. Unless you remove the smartphone from your Apple account, no one else will be able to reuse it.")
+            st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
             st.markdown(
             "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+            st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
            
         else:
             st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
