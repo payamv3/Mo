@@ -156,6 +156,12 @@ elif st.session_state.step == 2:
 
     if show_resell:
         st.markdown("**Resell:** You could earn some cash by selling your old phone.")
+        if max_price > 0:
+            #st.markdown(f"💰 Your **{device}** can fetch up to **${max_price}** on resale!")
+            st.markdown(f"<p style='font-size: 30x;'>💰 Your {device} can fetch up to ${max_price} on resale!</p>", unsafe_allow_html=True)
+            
+        else:
+            st.info(f"ℹ️ Could not find resale price for {device}.")
         st.markdown( f"**It's easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
             f"Try the following websites to get an estimate of your smartphone's current worth:  \n"
