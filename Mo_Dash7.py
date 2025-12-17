@@ -258,7 +258,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         )
         st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
         st.markdown(
-            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
         st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
        
         st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
@@ -281,7 +281,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
             st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
             st.markdown(
-            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/en-us/109511)")
+            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
             st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
            
         else:
