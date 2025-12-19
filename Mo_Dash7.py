@@ -243,51 +243,56 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
 
     #st.markdown(f"🔒 Before you {decision.lower()} your device, please be sure to wipe your data")
     st.markdown(f"<p style='font-size: 36x;'>🔒 Before you {decision.lower()} your device, please be sure to wipe your data</p>", unsafe_allow_html=True)
-    st.markdown(f"To remove data, see this guide:")
+    #st.markdown(f"To remove data, see this guide:")
 
     if device == "Unlisted Model":
-        st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+        #st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+        st.markdown("#### For iPhones (iOS), this means:")
         #st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
-        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+        #st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
-            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
+            "- Step 1: Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n"
         )
         st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
         st.markdown(
-            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
+            "- Step 2: Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
         st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
        
-        st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+        #st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+        st.markdown("#### For Android phones, this means:")
+        #st.markdown(f"Smartphones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
+        #st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
-            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
+            "- Step 1: Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
         )
-        st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
-        st.markdown(f"To remove the smartphone from your list of devices, see this link:")
         st.markdown(
-            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
+            "- Step 2: Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
+       
         
     else:
         os_type = "ios" if "iphone" in device.lower() else "android"
         if os_type == "ios":
-            st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+            #st.markdown("#### For iPhones (iOS), this means disabling Find My on your device and then wiping it:")
+            st.markdown("#### For iPhones (iOS), this means:")
             #st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
-            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+            #st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
-            "- Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
+            "- Step 1: Remove device from Find My: [Apple Guide](https://support.apple.com/guide/icloud/remove-devices-and-items-from-find-my-mmdc23b125f6/icloud)\n")
             st.markdown(f"All your Apple devices are registered with your account, no one else will be able to use the smartphone unless you deregister it. For iPhones (iOS), this means disabling Find My on your device.")
             st.markdown(
-            "- Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
+            "- Step2: Erase All Content and Settings: [Erase iPhone Guide](https://support.apple.com/guide/iphone/erase-iphone-iph7a2a9399b/ios)")
             st.markdown(f"This will involve selecting “Erase all Content and Settings” in the General section of the Settings app.")
            
         else:
-            st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
-            st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
-            st.markdown(f"To remove the smartphone from your list of devices, see this link:")
+            #st.markdown("#### For Android phones, this means removing the device from your Google account and then wiping it:")
+            st.markdown("#### For Android phones, this means:")
+            #st.markdown(f"Smart phones are usually linked to a user's account, it cannot be used by someone else unless you remove it from list of devices owned.")
+            #st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
-            "- Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
+            "- Step 1: Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
             st.markdown(
-            "- Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
+            "- Step 2: Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
             
 
     col1, col2 = st.columns(2)
