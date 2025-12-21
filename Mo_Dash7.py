@@ -265,6 +265,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
         st.markdown(
             "- Step 1: Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n"
         )
+        st.markdown("Your smartphone is linked to your Google account, and no one else can use it unless you remove it from your list of devices.")
         st.markdown(
             "- Step 2: Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)"
         )
@@ -291,6 +292,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             #st.markdown(f"To remove the smartphone from your list of devices, see this link:")
             st.markdown(
             "- Step 1: Removing smartphone from account: [Android Guide](https://support.google.com/accounts/answer/81987?hl=en&co=GENIE.Platform%3DAndroid)\n")
+            st.markdown("Your smartphone is linked to your Google account, and no one else can use it unless you remove it from your list of devices.")
             st.markdown(
             "- Step 2: Erase All Content and Settings: [Erase Android Guide](https://support.google.com/android/answer/6088915?hl=en)")
             
