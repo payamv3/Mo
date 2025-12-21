@@ -170,7 +170,7 @@ elif st.session_state.step == 2:
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
 
-     if show_resell_no_model:
+    if show_resell_no_model:
         st.markdown("**Resell:** You could earn some cash by selling your old phone.")
         st.markdown( f"**It's easy to resell, either vendor will send you a box with prepaid postage.**")
         st.markdown(
