@@ -115,7 +115,7 @@ elif st.session_state.step == 2:
     working = st.session_state.working
 
     # Special case for unlisted device
-    if device == "Unlisted Model":
+    if device == "Unlisted Model" and working == "Yes":
         st.warning("📵 Because the model is needed to resell the phone, your options are Donate or Recycle.")
 
     # Working → try resale price
