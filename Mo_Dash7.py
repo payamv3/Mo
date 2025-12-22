@@ -141,6 +141,10 @@ elif st.session_state.step == 2:
 
     st.markdown("### 💡 Here are your options:")
 
+    show_resell = False
+    show_resell_no_model = False
+    show_donate = False
+
     if working == "Yes" and device != "Unlisted Model":
         show_resell = True
         show_donate = True
