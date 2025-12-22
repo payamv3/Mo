@@ -149,7 +149,7 @@ elif st.session_state.step == 2:
         show_donate = True
     elif device == "Unlisted Model" and working != "Yes":
         show_resell = False
-        show_donate = True
+        show_donate = False
     else:
         show_resell = True
         show_donate = False
