@@ -170,6 +170,21 @@ elif st.session_state.step == 2:
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
         
+
+    if show_donate:
+        st.markdown(
+            f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
+            f"You can try donating your device, for example at:  \n"
+            f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) - This link shows the Google Map of nearby Goodwill locations. They accept working electronics at all locations\n"
+            f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
+        )
+
+    st.markdown(
+        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
+        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
+    )
+    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
+
     if show_resell_no_model:
         st.markdown("**Resell:** You could earn some cash by selling your old phone.")
         #if max_price > 0:
@@ -185,20 +200,6 @@ elif st.session_state.step == 2:
             f'- [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0) - This link leads to site to get quote to sell your smartphone to Gazelle \n'
         )
         st.markdown("Upon receiving the phone, the vendor will check battery condition, if it turns on, and if data has been wiped. If there are issues, they will likely adjust the offered price")
-
-    if show_donate:
-        st.markdown(
-            f"**Donate:** Your used phone may not fetch a high price, but if still working and holding a charge, donating gives it a new life. "
-            f"You can try donating your device, for example at:  \n"
-            f"- [Goodwill](https://www.google.com/maps/search/Goodwill+near+me) - This link shows the Google Map of nearby Goodwill locations. They accept working electronics at all locations\n"
-            f"- [Salvation Army](https://www.google.com/maps/search/Salvation+Army+near+me) - This link shows the Google Map of nearby Salvation Army locations, where electronics donations are accepted"
-        )
-
-    st.markdown(
-        f"**Recycle:** If your phone does not work or if you do not want to resell or donate, you can bring it for recycling, for example at:  \n"
-        f"- [Best Buy](https://www.google.com/maps/search/BestBuy+near+me)  – This link shows the Google Map of nearby BestBuy locations. Free electronics recycling is available at all stores"
-    )
-    st.markdown(f"There is usually a bin near Customer Service for dropping in your consumer electronics.")
 
     # Choices
     if working == "Yes" and device != "Unlisted Model":
