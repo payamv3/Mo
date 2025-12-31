@@ -25,7 +25,7 @@ st.title(
     """
     <style>
     html, body, [class*="css"]  {
-        font-size: 18px !important;
+        font-size: 14px !important;
     }
     </style>
     """,
