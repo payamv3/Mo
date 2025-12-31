@@ -62,6 +62,7 @@ if "prolific_id" not in st.session_state:
 
 st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
 
+
 # -------------------------------
 # Step 0: Device selection
 # -------------------------------
