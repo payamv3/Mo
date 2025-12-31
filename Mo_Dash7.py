@@ -248,7 +248,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             "if you feel comfortable recycling or reselling phones."
         )
 
-        if st.button("✅ Proceed anyway"):
+        if st.button("✅ I understand"):
             st.session_state.wipe_done = True
             st.rerun()
 
@@ -334,7 +334,7 @@ elif st.session_state.step == 3 and not st.session_state.wipe_done:
             "The phone may be non-functional. In these situations, you will have to decide for yourself "
             "if you feel comfortable recycling or reselling phones."
         )
-        if st.button("✅ Proceed anyway"):
+        if st.button("✅ I understand"):
             st.session_state.wipe_done = True
             st.rerun()
 
