@@ -388,7 +388,7 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
 # Step 5: Prolific ID submission
 # -------------------------------
 elif st.session_state.step == 4 and st.session_state.prolific_id is None:
-    prolific_id_input = st.text_input("🎯 Please enter your Prolific ID to finish:")
+    prolific_id_input = st.text_input("🎯 Please enter your Prolific ID and press Enter to finish:")
 
     if prolific_id_input:
         save_to_google_sheet(
