@@ -60,7 +60,12 @@ if "prolific_id" not in st.session_state:
     st.session_state.prolific_id = None
 
 
-st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+#st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+
+if st.session_state.step == 0:
+    st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+else:
+    st.markdown("### ♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
 
 
 # -------------------------------
