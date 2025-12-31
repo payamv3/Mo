@@ -362,7 +362,16 @@ elif st.session_state.step == 3 and st.session_state.wipe_done and not st.sessio
             f"- Resell your **{device}**: [BackMarket](https://www.backmarket.com/en-us/buyback/home), [Gazelle](https://www.gazelle.com/trade-in?_gl=1*1qgg1ts*_gcl_aw*R0NMLjE3NTc3MDA4NDguQ2p3S0NBandpWV9HQmhCRUVpd0FGYWdodnJrRElUenlqZ3M1QkU5YmJRd2JtTFRFNkxSNWc0SkJCdDhleXJXakU3emFPOXlMV2VHN01Sb0MxSThRQXZEX0J3RQ..*_gcl_au*NTk2NzI0NDQ3LjE3NTc3MDA4MzQuMzAwODg2NTE0LjE3NTgyMzExMjEuMTc1ODIzMTEyMQ..*_ga*MTU5NTIxODU5Mi4xNzQ1OTUxMjYw*_ga_6918GRRZ0Y*czE3NjM2NjE0MDIkbzYkZzEkdDE3NjM2NjE0MDQkajU3JGwwJGgxMTc4NzE4Mzg0)"
         )
         st.markdown(f"By clicking on one of the above website:")
-        st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone's functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
+        #st.markdown(f"You will be prompted to choose the model of your smartphone and provide information on memory and condition. They will offer a selling price, if you accept they will send you a prepaid box for you to ship your smartphone to them. After receiving, they check the phone's functionality, condition, and if Find My is turned off. They might modify the offer after this. If you accept the offer you will get paid, if you do not, they will ship the phone back to you.")
+        st.markdown(
+            f"- You will be prompted for the model of your smartphone and provide information on memory and condition.")
+        st.markdown(
+            f"- They will offer a selling price. If you accept, they will send you a prepaid box for you to ship your smartphone")
+        st.markdown(
+            f"- After receiving, they check the phone's functionality, condition, and if Find My is turned off. They might modify the offer after this.")
+        st.markdown(
+            f"- If you accept the offer, you will get paid. If you do not, they will ship the phone back to you.")
+        
 
     elif decision == "Donate":
         st.markdown(
