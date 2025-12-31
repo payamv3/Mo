@@ -21,6 +21,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.title(
+    """
+    <style>
+    html, body, [class*="css"]  {
+        font-size: 22px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # -------------------------------
 # Google Sheets helper
