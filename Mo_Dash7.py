@@ -63,6 +63,14 @@ if "prolific_id" not in st.session_state:
 st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
 
 
+
+# Display title with conditional size
+
+if st.session_state.step == 0:
+    st.title("♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+else:
+    st.markdown("### ♻️ Hi, I'm Mo - The Sustainable Electronics Assistant")
+
 # -------------------------------
 # Step 0: Device selection
 # -------------------------------
