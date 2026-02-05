@@ -72,7 +72,7 @@ else:
 # Step 0: Device selection
 # -------------------------------
 if st.session_state.step == 0:
-    st.markdown("Hello and welcome! I am Mo, your guide for making sustainable choices with smartphones you no longer use at home. We will work together to find the best option, whether that is reselling, donating, or recycling your device. If you experience a timeout, just refresh the page. You will be done when all your questions are answered and you have entered your <span style='color:blue; font-weight:bold;'>colored word</span> Prolific ID.")
+    st.markdown("Hello and welcome! I am Mo, your guide for making sustainable choices with smartphones you no longer use at home. We will work together to find the best option, whether that is reselling, donating, or recycling your device. If you experience a timeout, just refresh the page. You will be done when all your questions are answered and you have entered your Prolific ID.")
     devices = sorted(get_all_devices())
     st.markdown("📱To get started, could you tell me about a smartphone that you are no longer using?")
     device_choice = st.selectbox("You can start typing the model of the smartphone, e.g. iPhone SE or Samsung Galaxy, etc.", [""] + devices)
